@@ -4,6 +4,7 @@ import '../utils/init'
 import * as React from 'react'
 import AV from 'leancloud-storage'
 import { StaticImage } from "gatsby-plugin-image"
+import { Helmet } from "react-helmet"
 import {
   Typography,
   Box,
@@ -153,6 +154,10 @@ class Index extends React.Component {
     const { classes } = this.props
     return (
       <Container className={classes.root} maxWidth={false}>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>PrivacyBot: Your privacy. Guaranteed.</title>
+        </Helmet>
         <Box className={classes.container}>
           <StaticImage
             src="../images/logo-bot.png"
