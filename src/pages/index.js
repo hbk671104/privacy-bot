@@ -1,46 +1,154 @@
-// import * as React from "react"
-// import { Link } from "gatsby"
-// import { StaticImage } from "gatsby-plugin-image"
-
-// import Layout from "../components/layout"
-// import SEO from "../components/seo"
-
-// const IndexPage = () => (
-//   <Layout>
-//     <SEO title="Home" />
-//     <h1>Hi people</h1>
-//     <p>Welcome to your new Gatsby site.</p>
-//     <p>Now go build something great.</p>
-//     <StaticImage
-//       src="../images/gatsby-astronaut.png"
-//       width={300}
-//       quality={95}
-//       formats={["AUTO", "WEBP", "AVIF"]}
-//       alt="A Gatsby astronaut"
-//       style={{ marginBottom: `1.45rem` }}
-//     />
-//     <p>
-//       <Link to="/page-2/">Go to page 2</Link> <br />
-//       <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-//     </p>
-//   </Layout>
-// )
-
-// export default IndexPage
-
 import * as React from 'react'
-import { Typography, Container } from '@material-ui/core'
+import { StaticImage } from "gatsby-plugin-image"
+import {
+  Typography,
+  Box,
+  Container,
+  TextField,
+  Button
+} from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles';
+
+const CssTextField = withStyles({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: '#df4b1d',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#df4b1d',
+      },
+    },
+  },
+})(TextField);
 
 class Index extends React.Component {
-  render() {
+
+  handleSubmit = e => {
+    e.preventDefault()
+  }
+
+  renderForm = () => {
+    const { classes } = this.props
     return (
-      <Container>
-        <Typography variant='h3'>
-          PrivacyBot haha 哦嘿嘿
+      <Box borderColor='white' border={1} borderRadius={12} paddingLeft={6} paddingRight={6} paddingTop={3} paddingBottom={3}>
+        <form style={{ marginBottom: 0 }} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+          <Box mb={3}>
+            <Typography style={{ color: 'white', fontWeight: 'bold', textDecoration: 'underline' }} variant='body1'>
+              Mailing List
+            </Typography>
+          </Box>
+          <Box mb={2}>
+            <CssTextField inputProps={{
+              style: {
+                color: 'white',
+                fontSize: 14
+              }
+            }}
+              id="email"
+              label="Email Address"
+              InputLabelProps={{
+                style: {
+                  color: '#A9A9A9',
+                }
+              }}
+              variant="outlined"
+              fullWidth
+              required
+            />
+          </Box>
+          <Box mt={3}>
+            <Button
+              className={classes.submit}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Join!
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    )
+  }
+
+  renderCopyright = () => {
+    const { classes } = this.props
+    return (
+      <Box alignSelf='center' mb={3}>
+        <Typography className={classes.copyright} variant="caption" align="center">
+          {`@ ${new Date().getFullYear()} Privacy Gang. All right reserved.`}
         </Typography>
+      </Box>
+    )
+  }
+
+  render() {
+    const { classes } = this.props
+    return (
+      <Container className={classes.root} maxWidth={false}>
+        <Box className={classes.container}>
+          <StaticImage
+            src="../images/logo-bot.png"
+            placeholder='blurred'
+            height={180}
+            width={180}
+            alt="the logo bot"
+            style={{ marginBottom: `1.45rem` }}
+          />
+          <Box mb={6}>
+            <Typography className={classes.title} variant='h4' align='center'>
+              PrivacyBot
+            </Typography>
+            <Typography className={classes.subtitle} variant='body1' align='center'>
+              Your privacy. Guaranteed.
+            </Typography>
+          </Box>
+          {this.renderForm()}
+        </Box >
+        {this.renderCopyright()}
       </Container>
     )
   }
 }
 
-export default Index
+const styles = {
+  root: {
+    backgroundColor: '#180D1F',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  container: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  subtitle: {
+    color: 'white',
+    marginTop: 6
+  },
+  emailField: {
+    color: 'white'
+  },
+  submit: {
+    backgroundColor: '#df4b1d',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  copyright: {
+    color: '#A9A9A9'
+  }
+}
+
+export default withStyles(styles)(Index)
