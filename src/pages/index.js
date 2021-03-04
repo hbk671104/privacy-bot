@@ -1,11 +1,16 @@
+// load init script
+import '../utils/init'
+
 import * as React from 'react'
+import AV from 'leancloud-storage'
 import { StaticImage } from "gatsby-plugin-image"
 import {
   Typography,
   Box,
   Container,
   TextField,
-  Button
+  Button,
+  Snackbar
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
@@ -27,14 +32,52 @@ const CssTextField = withStyles({
 
 class Index extends React.Component {
 
+  state = {
+    email: '',
+    notificationShown: false
+  }
+
+  submitEmail = async email => {
+    const entry = new AV.Object('MailingList');
+    entry.set('email', email)
+    try {
+      await entry.save()
+      this.setState({
+        email: '',
+        notificationShown: true
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
+    const { email } = this.state
+    if (email) {
+      this.submitEmail(email)
+    }
+  }
+
+  handleEmailChange = e => {
+    e.preventDefault()
+    this.setState({
+      email: e.target.value
+    })
   }
 
   renderForm = () => {
     const { classes } = this.props
+    const { email } = this.state
     return (
-      <Box borderColor='white' border={1} borderRadius={12} paddingLeft={6} paddingRight={6} paddingTop={3} paddingBottom={3}>
+      <Box borderColor='white'
+        border={1}
+        borderRadius={6}
+        paddingLeft={6}
+        paddingRight={6}
+        paddingTop={3}
+        paddingBottom={3}
+      >
         <form style={{ marginBottom: 0 }} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
           <Box mb={3}>
             <Typography style={{ color: 'white', fontWeight: 'bold', textDecoration: 'underline' }} variant='body1'>
@@ -58,6 +101,8 @@ class Index extends React.Component {
               variant="outlined"
               fullWidth
               required
+              onChange={this.handleEmailChange}
+              value={email}
             />
           </Box>
           <Box mt={3}>
@@ -87,6 +132,23 @@ class Index extends React.Component {
     )
   }
 
+  renderNotification = () => {
+    const { notificationShown } = this.state
+    return (
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={notificationShown}
+        onClose={() => {
+          this.setState({
+            notificationShown: false
+          })
+        }}
+        message="Added to mailing list."
+        autoHideDuration={3000}
+      />
+    )
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -111,6 +173,7 @@ class Index extends React.Component {
           {this.renderForm()}
         </Box >
         {this.renderCopyright()}
+        {this.renderNotification()}
       </Container>
     )
   }
