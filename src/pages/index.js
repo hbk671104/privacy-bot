@@ -5,6 +5,7 @@ import * as React from 'react'
 import AV from 'leancloud-storage'
 import { StaticImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
+import Particles from 'react-particles-js'
 import {
   Typography,
   Box,
@@ -158,6 +159,7 @@ class Index extends React.Component {
           <meta charSet="utf-8" />
           <title>PrivacyBot: Your privacy. Guaranteed.</title>
         </Helmet>
+        <Particles className={classes.particles} />
         <Box className={classes.container}>
           <StaticImage
             src="../images/logo-bot.png"
@@ -188,8 +190,16 @@ const styles = {
   root: {
     backgroundColor: '#180D1F',
     height: '100vh',
+    width: '100vw',
     display: 'flex',
     flexDirection: 'column'
+  },
+  particles: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
   container: {
     flex: 1,
