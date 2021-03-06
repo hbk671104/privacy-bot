@@ -41,6 +41,20 @@ class Index extends React.Component {
     notificationShown: false
   }
 
+  componentDidMount() {
+    this.loadSheet()
+  }
+
+  loadSheet = async () => {
+    try {
+      const response = await fetch('https://api.sheety.co/e95da1588864ac0980b6d7551a96ad4e/privacyBot/index')
+      const json = await response.json()
+      console.log(json)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   submitEmail = async email => {
     const entry = new AV.Object('MailingList');
     entry.set('email', email)
