@@ -167,6 +167,31 @@ class Index extends React.Component {
     )
   }
 
+  renderHeader = () => {
+    const { classes } = this.props
+    return (
+      <Box position='absolute' top={0} left={0} right={0} height={96} pl={6} pr={6} display='flex' flexDirection='row' alignItems='center'>
+        <Box>
+          <StaticImage
+            src="../images/logo-bot.png"
+            placeholder='blurred'
+            height={72}
+            width={72}
+            alt="the logo bot"
+          />
+        </Box>
+        <Box ml={3}>
+          <Typography className={classes.title} variant='h6'>
+            PrivacyBot
+            </Typography>
+          <Typography className={classes.subtitle} variant='body2'>
+            Your privacy. Guaranteed.
+            </Typography>
+        </Box>
+      </Box>
+    )
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -176,23 +201,8 @@ class Index extends React.Component {
           <title>PrivacyBot: Your privacy. Guaranteed.</title>
         </Helmet>
         <Particles id="tsparticles" className={classes.particles} options={particleConfig} />
+        {this.renderHeader()}
         <Box className={classes.container}>
-          <StaticImage
-            src="../images/logo-bot.png"
-            placeholder='blurred'
-            height={180}
-            width={180}
-            alt="the logo bot"
-            style={{ marginBottom: `1.45rem` }}
-          />
-          <Box mb={6}>
-            <Typography className={classes.title} variant='h4' align='center'>
-              PrivacyBot
-            </Typography>
-            <Typography className={classes.subtitle} variant='body1' align='center'>
-              Your privacy. Guaranteed.
-            </Typography>
-          </Box>
           {this.renderForm()}
         </Box >
         {this.renderCopyright()}
@@ -229,8 +239,7 @@ const styles = {
     fontWeight: 'bold'
   },
   subtitle: {
-    color: 'white',
-    marginTop: 6
+    color: 'white'
   },
   emailField: {
     color: 'white'
