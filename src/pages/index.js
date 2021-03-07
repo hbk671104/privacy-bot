@@ -4,11 +4,7 @@ import '../utils/init'
 import * as React from 'react'
 import AV from 'leancloud-storage'
 import { StaticImage } from "gatsby-plugin-image"
-import { Helmet } from "react-helmet"
-import Particles from "react-tsparticles";
 import Linkify from 'react-linkify';
-
-import particleConfig from '../configs/particles'
 
 import {
   Typography,
@@ -26,6 +22,8 @@ import {
   TableRow
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+
+import Layout from '../components/layout'
 
 const CssTextField = withStyles({
   root: {
@@ -163,17 +161,6 @@ class Index extends React.Component {
     )
   }
 
-  renderCopyright = () => {
-    const { classes } = this.props
-    return (
-      <Box alignSelf='center' mb={3}>
-        <Typography className={classes.copyright} variant="caption" align="center">
-          {`@ ${new Date().getFullYear()} Privacy Gang. All right reserved.`}
-        </Typography>
-      </Box>
-    )
-  }
-
   renderNotification = () => {
     const { notificationShown } = this.state
     return (
@@ -188,31 +175,6 @@ class Index extends React.Component {
         message="Added to mailing list."
         autoHideDuration={3000}
       />
-    )
-  }
-
-  renderHeader = () => {
-    const { classes } = this.props
-    return (
-      <Box height={108} display='flex' pl={3} pr={3} flexDirection='row' alignItems='center'>
-        <Box>
-          <StaticImage
-            src="../images/logo-bot.png"
-            placeholder='blurred'
-            height={72}
-            width={72}
-            alt="the logo bot"
-          />
-        </Box>
-        <Box ml={3}>
-          <Typography className={classes.title} variant='h6'>
-            PrivacyBot
-            </Typography>
-          <Typography className={classes.subtitle} variant='body2'>
-            Your privacy. Guaranteed.
-            </Typography>
-        </Box>
-      </Box>
     )
   }
 
@@ -261,45 +223,18 @@ class Index extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <Container className={classes.root} maxWidth={false}>
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>PrivacyBot: Your privacy. Guaranteed.</title>
-        </Helmet>
-        <Particles id="tsparticles" className={classes.particles} options={particleConfig} />
-        <Box className={classes.container}>
-          {this.renderHeader()}
-          <Box className={classes.content} p={3}>
-            {this.renderTable()}
-            {this.renderForm()}
-          </Box >
-          {this.renderCopyright()}
-          {this.renderNotification()}
-        </Box>
-      </Container>
+      <Layout title='PrivacyBot: Your privacy. Guaranteed.'>
+        <Box className={classes.content}>
+          {this.renderTable()}
+          {this.renderForm()}
+        </Box >
+        {this.renderNotification()}
+      </Layout >
     )
   }
 }
 
 const styles = {
-  root: {
-    backgroundColor: '#180D1F',
-    minHeight: '100vh',
-    width: '100vw'
-  },
-  particles: {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 0
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    zIndex: 1
-  },
   content: {
     flex: 1,
     display: 'flex',
@@ -335,9 +270,6 @@ const styles = {
     backgroundColor: '#df4b1d',
     fontSize: 16,
     fontWeight: 'bold'
-  },
-  copyright: {
-    color: '#A9A9A9'
   }
 }
 
