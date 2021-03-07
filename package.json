@@ -21,6 +21,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
+    "react-linkify": "0.2.2",
     "react-tsparticles": "^1.19.2"
   },
   "devDependencies": {

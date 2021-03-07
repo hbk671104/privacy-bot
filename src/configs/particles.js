@@ -1,7 +1,7 @@
 const particleConfig = {
     fpsLimit: 60,
     interactivity: {
-        detectsOn: "canvas",
+        detectsOn: "window",
         events: {
             // onClick: {
             //     enable: true,

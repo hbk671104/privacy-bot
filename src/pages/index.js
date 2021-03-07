@@ -6,6 +6,8 @@ import AV from 'leancloud-storage'
 import { StaticImage } from "gatsby-plugin-image"
 import { Helmet } from "react-helmet"
 import Particles from "react-tsparticles";
+import Linkify from 'react-linkify';
+
 import particleConfig from '../configs/particles'
 
 import {
@@ -21,9 +23,7 @@ import {
   TableContainer,
   TablePagination,
   TableHead,
-  TableRow,
-  Paper,
-  TableFooter
+  TableRow
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
@@ -46,7 +46,10 @@ const CssTextField = withStyles({
 class Index extends React.Component {
 
   state = {
-    data: [],
+    sheet: {
+      header: [],
+      data: []
+    },
     page: 0,
     rowsPerPage: 5,
     email: '',
@@ -58,12 +61,17 @@ class Index extends React.Component {
   }
 
   loadSheet = async () => {
+    const sheetId = '1WUDaK4WzIKCrmui27vmpko_yarxHCLVTT8LhmbYVmDg'
+    const range = 'Index'
+    const appKey = 'AIzaSyAyPQTKZvoTAsk4Y8vyrGpwJ13E6jKB7Os'
     try {
-      const response = await fetch('https://api.sheety.co/e95da1588864ac0980b6d7551a96ad4e/privacyBot/index')
-      const { index } = await response.json()
-      console.log(index)
+      const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${appKey}`)
+      const { values } = await response.json()
       this.setState({
-        data: index
+        sheet: {
+          header: values[0],
+          data: values.slice(1)
+        }
       })
     } catch (error) {
       console.error(error)
@@ -104,12 +112,13 @@ class Index extends React.Component {
     const { email } = this.state
     return (
       <Box borderColor='white'
-        border={1}
+        border='2px dashed white'
         borderRadius={6}
         paddingLeft={6}
         paddingRight={6}
         paddingTop={3}
         paddingBottom={3}
+        ml={6}
       >
         <form style={{ marginBottom: 0 }} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
           <Box mb={3}>
@@ -209,36 +218,33 @@ class Index extends React.Component {
 
   renderTable = () => {
     const { classes } = this.props
-    const { data, page, rowsPerPage } = this.state
+    const { sheet: { header, data }, page, rowsPerPage } = this.state
     return (
-      <TableContainer style={{ width: '60vw' }} component={Paper}>
+      <TableContainer className={classes.tableContainer}>
         <Table size='small' aria-label="target source sheet">
           <TableHead>
             <TableRow>
-              <TableCell style={{ fontWeight: 'bold' }}>Business</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>View</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Delete</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Opt-Out of Sale</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Feedback</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Other</TableCell>
+              {header.map(h => (
+                <TableCell key={h} className={classes.tableHeadCell}>{h}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-              <TableRow style={{ wordBreak: "break-word" }} row={`${row.id}`}>
-                <TableCell width='10%' component="th" scope="row">
-                  {row.business}
-                </TableCell>
-                <TableCell width='20%'>{row.view}</TableCell>
-                <TableCell width='20%'>{row.delete}</TableCell>
-                <TableCell width='15%'>{row.optOutOfSale}</TableCell>
-                <TableCell width='15%'>{row.feedback}</TableCell>
-                <TableCell width='20%'>{row.other}</TableCell>
+            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+              <TableRow style={{ wordBreak: "break-word" }} key={`${index}-${new Date()}`}>
+                {row.map((cell, index) => (
+                  <TableCell key={`${index}-${new Date()}`} className={classes.tableRowCell}>
+                    <Linkify properties={{ target: '_blank', style: { color: '#df4b1d' } }}>
+                      {cell}
+                    </Linkify>
+                  </TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <TablePagination
+          className={classes.tableRowCell}
           rowsPerPageOptions={[rowsPerPage]}
           component='div'
           count={data.length}
@@ -261,13 +267,15 @@ class Index extends React.Component {
           <title>PrivacyBot: Your privacy. Guaranteed.</title>
         </Helmet>
         <Particles id="tsparticles" className={classes.particles} options={particleConfig} />
-        {this.renderHeader()}
-        <Box className={classes.container} p={3}>
-          {this.renderTable()}
-          {this.renderForm()}
-        </Box >
-        {this.renderCopyright()}
-        {this.renderNotification()}
+        <Box className={classes.container}>
+          {this.renderHeader()}
+          <Box className={classes.content} p={3}>
+            {this.renderTable()}
+            {this.renderForm()}
+          </Box >
+          {this.renderCopyright()}
+          {this.renderNotification()}
+        </Box>
       </Container>
     )
   }
@@ -277,9 +285,7 @@ const styles = {
   root: {
     backgroundColor: '#180D1F',
     minHeight: '100vh',
-    width: '100vw',
-    display: 'flex',
-    flexDirection: 'column'
+    width: '100vw'
   },
   particles: {
     position: 'fixed',
@@ -287,17 +293,33 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 0,
+    zIndex: 0
   },
   container: {
+    display: 'flex',
+    flexDirection: 'column',
+    zIndex: 1
+  },
+  content: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'flex-start'
   },
-  table: {
-    maxWidth: '80vw'
+  tableContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    borderColor: 'white',
+    border: '2px dashed white',
+    borderRadius: '12px'
+  },
+  tableHeadCell: {
+    fontWeight: 'bold',
+    color: 'white',
+    textDecoration: 'underline'
+  },
+  tableRowCell: {
+    color: 'white'
   },
   title: {
     color: 'white',
