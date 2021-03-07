@@ -14,7 +14,16 @@ import {
   Container,
   TextField,
   Button,
-  Snackbar
+  Snackbar,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableHead,
+  TableRow,
+  Paper,
+  TableFooter
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
@@ -37,8 +46,11 @@ const CssTextField = withStyles({
 class Index extends React.Component {
 
   state = {
+    data: [],
+    page: 0,
+    rowsPerPage: 5,
     email: '',
-    notificationShown: false
+    notificationShown: false,
   }
 
   componentDidMount() {
@@ -48,8 +60,11 @@ class Index extends React.Component {
   loadSheet = async () => {
     try {
       const response = await fetch('https://api.sheety.co/e95da1588864ac0980b6d7551a96ad4e/privacyBot/index')
-      const json = await response.json()
-      console.log(json)
+      const { index } = await response.json()
+      console.log(index)
+      this.setState({
+        data: index
+      })
     } catch (error) {
       console.error(error)
     }
@@ -170,7 +185,7 @@ class Index extends React.Component {
   renderHeader = () => {
     const { classes } = this.props
     return (
-      <Box position='absolute' top={0} left={0} right={0} height={96} pl={6} pr={6} display='flex' flexDirection='row' alignItems='center'>
+      <Box height={108} display='flex' pl={3} pr={3} flexDirection='row' alignItems='center'>
         <Box>
           <StaticImage
             src="../images/logo-bot.png"
@@ -192,6 +207,51 @@ class Index extends React.Component {
     )
   }
 
+  renderTable = () => {
+    const { classes } = this.props
+    const { data, page, rowsPerPage } = this.state
+    return (
+      <TableContainer style={{ width: '60vw' }} component={Paper}>
+        <Table size='small' aria-label="target source sheet">
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ fontWeight: 'bold' }}>Business</TableCell>
+              <TableCell style={{ fontWeight: 'bold' }}>View</TableCell>
+              <TableCell style={{ fontWeight: 'bold' }}>Delete</TableCell>
+              <TableCell style={{ fontWeight: 'bold' }}>Opt-Out of Sale</TableCell>
+              <TableCell style={{ fontWeight: 'bold' }}>Feedback</TableCell>
+              <TableCell style={{ fontWeight: 'bold' }}>Other</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+              <TableRow style={{ wordBreak: "break-word" }} row={`${row.id}`}>
+                <TableCell width='10%' component="th" scope="row">
+                  {row.business}
+                </TableCell>
+                <TableCell width='20%'>{row.view}</TableCell>
+                <TableCell width='20%'>{row.delete}</TableCell>
+                <TableCell width='15%'>{row.optOutOfSale}</TableCell>
+                <TableCell width='15%'>{row.feedback}</TableCell>
+                <TableCell width='20%'>{row.other}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[rowsPerPage]}
+          component='div'
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={(e, newPage) => {
+            this.setState({ page: newPage })
+          }}
+        />
+      </TableContainer>
+    )
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -202,7 +262,8 @@ class Index extends React.Component {
         </Helmet>
         <Particles id="tsparticles" className={classes.particles} options={particleConfig} />
         {this.renderHeader()}
-        <Box className={classes.container}>
+        <Box className={classes.container} p={3}>
+          {this.renderTable()}
           {this.renderForm()}
         </Box >
         {this.renderCopyright()}
@@ -215,13 +276,13 @@ class Index extends React.Component {
 const styles = {
   root: {
     backgroundColor: '#180D1F',
-    height: '100vh',
+    minHeight: '100vh',
     width: '100vw',
     display: 'flex',
     flexDirection: 'column'
   },
   particles: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     right: 0,
     bottom: 0,
@@ -230,9 +291,13 @@ const styles = {
   container: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  table: {
+    maxWidth: '80vw'
   },
   title: {
     color: 'white',

@@ -1,4 +1,4 @@
-export default {
+const particleConfig = {
     fpsLimit: 60,
     interactivity: {
         detectsOn: "canvas",
@@ -71,3 +71,5 @@ export default {
     },
     detectRetina: true,
 }
+
+export default particleConfig
