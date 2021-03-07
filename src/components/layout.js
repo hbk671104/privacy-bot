@@ -20,7 +20,7 @@ const Layout = ({ children, classes, title }) => {
                 <Particles id="tsparticles" className={classes.particles} options={particleConfig} />
             </Box>
             <Box className={classes.container}>
-                <Box zIndex={1} p={3}>
+                <Box zIndex={1} pl={3} pr={3}>
                     <Header />
                     {children}
                 </Box>
