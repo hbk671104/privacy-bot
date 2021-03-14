@@ -3,13 +3,11 @@ import '../utils/init'
 
 import * as React from 'react'
 import AV from 'leancloud-storage'
-import { StaticImage } from "gatsby-plugin-image"
 import Linkify from 'react-linkify';
 
 import {
   Typography,
   Box,
-  Container,
   TextField,
   Button,
   Snackbar,
