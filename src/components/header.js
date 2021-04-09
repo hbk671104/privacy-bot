@@ -23,11 +23,9 @@ const Header = ({ classes }) => {
             </Box>
             <Box flex={1} display='flex' flexDirection='row' justifyContent='flex-end'>
                 <Box>
-                    <Link to="/#faq">
-                        <Typography variant='h6' color='secondary'>
-                            FAQ
-                        </Typography>
-                    </Link>
+                    <Typography variant='h6' color='secondary'>
+                        <a href='/#faq' style={{ textDecoration: 'none', color: 'inherit' }}>FAQ</a>
+                    </Typography>
                 </Box>
             </Box>
         </Box >

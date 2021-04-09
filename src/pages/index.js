@@ -93,21 +93,26 @@ class Index extends React.Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Invitation Only</DialogTitle>
+        {/* <DialogTitle id="alert-dialog-title">Enter your email for an invite to our closed beta service.</DialogTitle> */}
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This service is currently in closed beta. If you would like to receive an invitation, please enter your email. We will never sell or share your email with any third party.
+            Enter your email for an invite to our closed beta service.
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
+            // label="Email Address"
             type="email"
             fullWidth
             onChange={this.handleEmailChange}
             value={email}
           />
+          <Box mt={3}>
+            <DialogContentText id="alert-dialog-description">
+              PrivacyBot will never sell or share your email.
+            </DialogContentText>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Box height={48} width={60} mr={1} display='flex' justifyContent='center' alignItems='center'>
@@ -144,14 +149,17 @@ class Index extends React.Component {
 
   renderProductMission = () => {
     return (
-      <Box display='flex' flexDirection='column' alignItems='center' mt={6}>
-        <Box width='60%' mb={3}>
-          <Typography variant='h5'>
-            We facilitate the following personal data requests to social media, big tech companies, and data brokers:
-                </Typography>
-        </Box>
+      <Box display='flex' flexDirection='column' alignItems='center' mt={1}>
         <Box>
           <Box display='flex' flexDirection='row' alignItems='center'>
+            <CheckCircleIcon color='primary' />
+            <Box ml={1}>
+              <Typography color='secondary'>
+                Instruct companies not to sell your info
+                  </Typography>
+            </Box>
+          </Box>
+          <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
             <CheckCircleIcon color='primary' />
             <Box ml={1}>
               <Typography color='secondary'>
@@ -171,16 +179,8 @@ class Index extends React.Component {
             <CheckCircleIcon color='primary' />
             <Box ml={1}>
               <Typography color='secondary'>
-                Tell them not to sell your info
-                  </Typography>
-            </Box>
-          </Box>
-          <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
-            <CheckCircleIcon color='primary' />
-            <Box ml={1}>
-              <Typography color='secondary'>
-                Get a personalized privacy analysis (optional)
-                  </Typography>
+                Get our Personal Privacy Analysis (optional)
+              </Typography>
             </Box>
           </Box>
         </Box>
@@ -204,11 +204,11 @@ class Index extends React.Component {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Who built and runs this service?</Typography>
+              <Typography>Does PrivacyBot make money?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography color='secondary'>
-                The PrivacyGang is a group of four students at Cornell Tech who want to make privacy convenient.
+                Right now, we don’t. We’re donating our time because we believe this service should exist. If we grow to need funding, we will engage our users to figure out what they’re comfortable with.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -218,39 +218,11 @@ class Index extends React.Component {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Why am I able to file requests to access, delete, and opt-out of sale of my information?</Typography>
+              <Typography>What would you do with my email if I provided it?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography color='secondary'>
-                <a href='https://gdpr-info.eu/' target='_blank' rel="noreferrer">General Data Privacy Regulation</a>, <a href='https://oag.ca.gov/privacy/ccpa' target='_blank' rel="noreferrer">California Consumer Privacy Act</a>, and other similar legislation are forcing internet companies to provide more information and control to consumers.  Many of the largest companies are providing these rights to all consumers in the US and in the EU.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>Do I need PrivacyBot to file these requests?</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography color='secondary'>
-                No. We just make it easier.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>How does PrivacyBot make money?</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography color='secondary'>
-                Right now we don’t. We’re just a bunch of graduate students trying to see if anyone wants a service like this. If people do and we need to scale, we plan to engage our users and the broader privacy community while figuring out where money would come from.
+                We respect your inbox.  If you sign up to receive emails from us, we will send very occasional communications, including early invitations to new products and brief user feedback surveys. Expect, at maximum, three such emails a month. If at any point you decide that you don’t want to receive any of these emails, simply click the unsubscribe link included at the bottom of all PrivacyBot emails.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -274,11 +246,11 @@ class Index extends React.Component {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Does PrivacyBot collect or retain any of my information?</Typography>
+              <Typography>Does PrivacyBot use any ad tech, such as cookies or trackers?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography color='secondary'>
-                If you sign up to receive emails from us, we will retain and use that email to send you email communications.  (We do not use this email to create profiles or otherwise). You can unsubscribe using the link at the bottom of all PrivacyBot emails. We will only use this email. Otherwise, no, we do not collect or retain your information.
+                Of course not. You can verify this with services such as <a href='https://themarkup.org/blacklight?url=privacybot.co' target='_blank' rel="noreferrer">Blacklight</a>.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -288,11 +260,53 @@ class Index extends React.Component {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Does PrivacyBot use any ad tech, such as cookies or trackers?</Typography>
+              <Typography>What is PrivacyBot’s optional Personal Privacy Analysis?</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography color='secondary'>
-                Of course not. You can verify this with services such as <a href='https://disconnect.me/disconnect' target='_blank' rel="noreferrer">Disconnect.</a>
+                Companies are required to send a lot of information back to you, but they don’t have to make it easy to understand. Users who opt-in to receive the Personal Privacy Analysis can send us their data to summarize and present in a meaningful form.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon color='primary' />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Can I file personal data requests myself (without PrivacyBot)?</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography color='secondary'>
+                Yes, but we make it much easier. PrivacyBot batches and automates requests to dozens of data holders to save you time.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon color='primary' />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Why am I able to file requests to access, delete, and opt-out of sale of my information?</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography color='secondary'>
+                Legislation such as <a href='https://gdpr-info.eu/' target='_blank' rel="noreferrer">General Data Privacy Regulation (GDPR)</a> and <a href='https://oag.ca.gov/privacy/ccpa' target='_blank' rel="noreferrer">California Consumer Privacy Act (CCPA)</a> are forcing major companies to provide more information and control to consumers. Many of the largest companies are providing these rights to all consumers in the US and in the EU.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon color='primary' />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>I have more questions. Can I talk to someone?</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography color='secondary'>
+                We’d love to talk! You can reach us at <a href='mailto:info@privacybot.co'>info@privacybot.co</a>.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -309,19 +323,22 @@ class Index extends React.Component {
           <Box>
             <Box display='flex' flexDirection='row' pt={3}>
               <Box flex={1}>
-                <Typography variant='h3' gutterBottom>
-                  Did another data breach expose your personal information?
+                <Box>
+                  <Typography variant='h3'>
+                    Did another data breach expose your personal information?
                   </Typography>
-                <Typography className={classes.subtitle} variant='h6' color='secondary'>
-                  PrivacyBot helps you take back control of your personal information held by social media, big tech companies, and data brokers.
-                </Typography>
+                  <Box mt={2}>
+                    <Typography className={classes.subtitle} variant='h6'>
+                      Social media giants, big tech companies, and data brokers can leave your personal information unprotected. PrivacyBot gives you back control.
+                    </Typography>
+                  </Box>
+                </Box>
+                {this.renderProductMission()}
               </Box>
               <Box flex={1}>
                 <StaticImage
                   src="../images/company-logos.png"
                   placeholder='blurred'
-                  // height={300}
-                  // width={500}
                   alt="rogue company logos"
                 />
               </Box>
@@ -334,10 +351,9 @@ class Index extends React.Component {
                 onClick={this.toggleDialog}
               >
                 Get Started
-                  </Button>
+              </Button>
             </Box>
           </Box>
-          {this.renderProductMission()}
           <Box mt={6} mb={6}>
             <Divider />
           </Box>
