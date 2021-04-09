@@ -3,88 +3,72 @@ import '../utils/init'
 
 import * as React from 'react'
 import AV from 'leancloud-storage'
-import Linkify from 'react-linkify';
-
+import { StaticImage } from "gatsby-plugin-image"
 import {
   Typography,
   Box,
-  TextField,
   Button,
   Snackbar,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TablePagination,
-  TableHead,
-  TableRow
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  TextField,
+  CircularProgress
 } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles';
+import {
+  withStyles,
+  createMuiTheme,
+  ThemeProvider
+} from '@material-ui/core/styles'
 
 import Layout from '../components/layout'
 
-const CssTextField = withStyles({
-  root: {
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',
-      },
-      '&:hover fieldset': {
-        borderColor: '#df4b1d',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#df4b1d',
-      },
-    },
-  },
-})(TextField);
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#df4b1d',
+    }
+  }
+})
 
 class Index extends React.Component {
 
   state = {
-    sheet: {
-      header: [],
-      data: []
-    },
-    page: 0,
-    rowsPerPage: 5,
     email: '',
+    dialogOpen: false,
     notificationShown: false,
+    submitting: false
   }
 
   componentDidMount() {
-    this.loadSheet()
+
   }
 
-  loadSheet = async () => {
-    const sheetId = '1WUDaK4WzIKCrmui27vmpko_yarxHCLVTT8LhmbYVmDg'
-    const range = 'Index'
-    const appKey = 'AIzaSyAyPQTKZvoTAsk4Y8vyrGpwJ13E6jKB7Os'
-    try {
-      const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${appKey}`)
-      const { values } = await response.json()
-      this.setState({
-        sheet: {
-          header: values[0],
-          data: values.slice(1)
-        }
-      })
-    } catch (error) {
-      console.error(error)
-    }
+  toggleDialog = () => {
+    this.setState((prevState) => ({
+      dialogOpen: !prevState.dialogOpen
+    }))
   }
 
   submitEmail = async email => {
     const entry = new AV.Object('MailingList');
     entry.set('email', email)
+    this.setState({ submitting: true })
     try {
       await entry.save()
       this.setState({
         email: '',
-        notificationShown: true
+        notificationShown: true,
+        dialogOpen: false,
       })
     } catch (error) {
       console.error(error)
+    } finally {
+      this.setState({
+        submitting: false
+      })
     }
   }
 
@@ -103,59 +87,46 @@ class Index extends React.Component {
     })
   }
 
-  renderForm = () => {
-    const { classes } = this.props
-    const { email } = this.state
+  renderDialog = () => {
+    const { dialogOpen, email, submitting } = this.state
     return (
-      <Box borderColor='white'
-        border='2px dashed white'
-        borderRadius={6}
-        paddingLeft={6}
-        paddingRight={6}
-        paddingTop={3}
-        paddingBottom={3}
-        ml={6}
+      <Dialog
+        open={dialogOpen}
+        onClose={this.toggleDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <form style={{ marginBottom: 0 }} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-          <Box mb={3}>
-            <Typography style={{ color: 'white', fontWeight: 'bold', textDecoration: 'underline' }} variant='body1'>
-              Mailing List
-            </Typography>
+        <DialogTitle id="alert-dialog-title">Invitation Only</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This service is currently in closed beta. If you would like to receive an invitation, please enter your email. We will never sell or share your email with any third party.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            onChange={this.handleEmailChange}
+            value={email}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Box height={48} width={60} mr={1} display='flex' justifyContent='center' alignItems='center'>
+            {
+              submitting ?
+                <CircularProgress size={24} />
+                :
+                <ThemeProvider theme={theme}>
+                  <Button onClick={this.handleSubmit} color="primary">
+                    Submit
+                </Button>
+                </ThemeProvider>
+            }
           </Box>
-          <Box mb={2}>
-            <CssTextField inputProps={{
-              style: {
-                color: 'white',
-                fontSize: 14
-              }
-            }}
-              id="email"
-              label="Email Address"
-              InputLabelProps={{
-                style: {
-                  color: '#A9A9A9',
-                }
-              }}
-              variant="outlined"
-              fullWidth
-              required
-              onChange={this.handleEmailChange}
-              value={email}
-            />
-          </Box>
-          <Box mt={3}>
-            <Button
-              className={classes.submit}
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Join!
-            </Button>
-          </Box>
-        </form>
-      </Box>
+        </DialogActions>
+      </Dialog>
     )
   }
 
@@ -176,56 +147,44 @@ class Index extends React.Component {
     )
   }
 
-  renderTable = () => {
-    const { classes } = this.props
-    const { sheet: { header, data }, page, rowsPerPage } = this.state
-    return (
-      <TableContainer className={classes.tableContainer}>
-        <Table size='small' aria-label="target source sheet">
-          <TableHead>
-            <TableRow>
-              {header.map(h => (
-                <TableCell key={h} className={classes.tableHeadCell}>{h}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-              <TableRow style={{ wordBreak: "break-word" }} key={`${index}-${new Date()}`}>
-                {row.map((cell, index) => (
-                  <TableCell key={`${index}-${new Date()}`} className={classes.tableRowCell}>
-                    <Linkify properties={{ target: '_blank', style: { color: '#df4b1d' } }}>
-                      {cell}
-                    </Linkify>
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          className={classes.tableRowCell}
-          rowsPerPageOptions={[rowsPerPage]}
-          component='div'
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={(e, newPage) => {
-            this.setState({ page: newPage })
-          }}
-        />
-      </TableContainer>
-    )
-  }
-
   render() {
     const { classes } = this.props
     return (
       <Layout title='PrivacyBot: Your privacy. Guaranteed.'>
-        <Box className={classes.content}>
-          {this.renderTable()}
-          {this.renderForm()}
-        </Box >
+        <Box display='flex' flexDirection='row' pt={3}>
+          <Box flex={1}>
+            <Box>
+              <Typography variant='h3' gutterBottom>
+                Did another data breach expose your personal information?
+              </Typography>
+              <Typography className={classes.subtitle} variant='h6'>
+                PrivacyBot helps you take back control of your personal information held by social media, big tech companies, and data brokers.
+              </Typography>
+              <Box mt={3} display='flex' justifyContent='center'>
+                <ThemeProvider theme={theme}>
+                  <Button
+                    color='primary'
+                    variant="contained"
+                    size="large"
+                    onClick={this.toggleDialog}
+                  >
+                    Get Started
+                  </Button>
+                </ThemeProvider>
+              </Box>
+            </Box>
+          </Box>
+          <Box flex={1}>
+            <StaticImage
+              src="../images/company-logos.png"
+              placeholder='blurred'
+              // height={300}
+              // width={500}
+              alt="rogue company logos"
+            />
+          </Box>
+        </Box>
+        {this.renderDialog()}
         {this.renderNotification()}
       </Layout >
     )
@@ -233,41 +192,14 @@ class Index extends React.Component {
 }
 
 const styles = {
-  content: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start'
-  },
-  tableContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    borderColor: 'white',
-    border: '2px dashed white',
-    borderRadius: '12px'
-  },
-  tableHeadCell: {
-    fontWeight: 'bold',
-    color: 'white',
-    textDecoration: 'underline'
-  },
-  tableRowCell: {
-    color: 'white'
-  },
   title: {
-    color: 'white',
-    fontWeight: 'bold'
+
   },
   subtitle: {
-    color: 'white'
+    fontWeight: 'normal'
   },
-  emailField: {
-    color: 'white'
-  },
-  submit: {
-    backgroundColor: '#df4b1d',
-    fontSize: 16,
-    fontWeight: 'bold'
+  button: {
+    backgroundColor: 'orange'
   }
 }
 

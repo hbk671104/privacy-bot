@@ -1,11 +1,9 @@
 import * as React from 'react'
 import { Helmet } from "react-helmet"
-import Particles from "react-tsparticles";
 import { Container, Box } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
 // local import
-import particleConfig from '../configs/particles'
 import Header from './header'
 import Footer from './footer'
 
@@ -14,7 +12,12 @@ const Layout = ({ children, classes, title }) => {
         <Container className={classes.root} maxWidth={false}>
             <Helmet>
                 <meta charSet="utf-8" />
+                <meta
+                    name="viewport"
+                    content="minimum-scale=1, initial-scale=1, width=device-width"
+                />
                 <title>{title}</title>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                 <script type='text/javascript'>
                     {`window.$crisp=[];window.CRISP_WEBSITE_ID="cc421c66-baa6-48dc-89c9-a7dda04473e1";
                     (function(){d = document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";
@@ -22,11 +25,8 @@ const Layout = ({ children, classes, title }) => {
                     `}
                 </script>
             </Helmet>
-            <Box zIndex={0}>
-                <Particles id="tsparticles" className={classes.particles} options={particleConfig} />
-            </Box>
             <Box className={classes.container}>
-                <Box zIndex={1} pl={3} pr={3}>
+                <Box pl={3} pr={3}>
                     <Header />
                     {children}
                 </Box>
@@ -38,9 +38,9 @@ const Layout = ({ children, classes, title }) => {
 
 const styles = {
     root: {
-        backgroundColor: '#180D1F',
+        backgroundColor: 'white',
         minHeight: '100vh',
-        width: '100vw'
+        width: '80vw'
     },
     particles: {
         position: 'fixed',
