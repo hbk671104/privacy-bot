@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { StaticImage } from "gatsby-plugin-image"
+import { Link } from 'gatsby'
 import { Box, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
@@ -20,7 +21,16 @@ const Header = ({ classes }) => {
                     </Typography>
                 </Box>
             </Box>
-        </Box>
+            <Box flex={1} display='flex' flexDirection='row' justifyContent='flex-end'>
+                <Box>
+                    <Link to="/#faq">
+                        <Typography variant='h6' color='secondary'>
+                            FAQ
+                        </Typography>
+                    </Link>
+                </Box>
+            </Box>
+        </Box >
     )
 }
 
