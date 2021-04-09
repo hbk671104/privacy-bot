@@ -18,20 +18,11 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import {
-  withStyles,
-  createMuiTheme,
-  ThemeProvider
+  withStyles
 } from '@material-ui/core/styles'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 
 import Layout from '../components/layout'
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#df4b1d',
-    }
-  }
-})
 
 class Index extends React.Component {
 
@@ -118,11 +109,9 @@ class Index extends React.Component {
               submitting ?
                 <CircularProgress size={24} />
                 :
-                <ThemeProvider theme={theme}>
-                  <Button onClick={this.handleSubmit} color="primary">
-                    Submit
+                <Button onClick={this.handleSubmit} color="primary">
+                  Submit
                 </Button>
-                </ThemeProvider>
             }
           </Box>
         </DialogActions>
@@ -151,37 +140,78 @@ class Index extends React.Component {
     const { classes } = this.props
     return (
       <Layout title='PrivacyBot: Your privacy. Guaranteed.'>
-        <Box display='flex' flexDirection='row' pt={3}>
-          <Box flex={1}>
-            <Box>
-              <Typography variant='h3' gutterBottom>
-                Did another data breach expose your personal information?
-              </Typography>
-              <Typography className={classes.subtitle} variant='h6'>
-                PrivacyBot helps you take back control of your personal information held by social media, big tech companies, and data brokers.
-              </Typography>
-              <Box mt={3} display='flex' justifyContent='center'>
-                <ThemeProvider theme={theme}>
-                  <Button
-                    color='primary'
-                    variant="contained"
-                    size="large"
-                    onClick={this.toggleDialog}
-                  >
-                    Get Started
-                  </Button>
-                </ThemeProvider>
+        <Box>
+          <Box>
+            <Box display='flex' flexDirection='row' pt={3}>
+              <Box flex={1}>
+                <Typography variant='h3' gutterBottom>
+                  Did another data breach expose your personal information?
+                  </Typography>
+                <Typography className={classes.subtitle} variant='h6' color='secondary'>
+                  PrivacyBot helps you take back control of your personal information held by social media, big tech companies, and data brokers.
+                </Typography>
+              </Box>
+              <Box flex={1}>
+                <StaticImage
+                  src="../images/company-logos.png"
+                  placeholder='blurred'
+                  // height={300}
+                  // width={500}
+                  alt="rogue company logos"
+                />
               </Box>
             </Box>
+            <Box mt={3} display='flex' justifyContent='center'>
+              <Button
+                color='primary'
+                variant="contained"
+                size="large"
+                onClick={this.toggleDialog}
+              >
+                Get Started
+                  </Button>
+            </Box>
           </Box>
-          <Box flex={1}>
-            <StaticImage
-              src="../images/company-logos.png"
-              placeholder='blurred'
-              // height={300}
-              // width={500}
-              alt="rogue company logos"
-            />
+          <Box display='flex' flexDirection='column' alignItems='center' mt={6}>
+            <Box width='60%' mb={3}>
+              <Typography variant='h5'>
+                We facilitate the following personal data requests to social media, big tech companies, and data brokers:
+                </Typography>
+            </Box>
+            <Box>
+              <Box display='flex' flexDirection='row' alignItems='center'>
+                <CheckCircleIcon color='primary' />
+                <Box ml={1}>
+                  <Typography color='secondary'>
+                    Access your info
+                  </Typography>
+                </Box>
+              </Box>
+              <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
+                <CheckCircleIcon color='primary' />
+                <Box ml={1}>
+                  <Typography color='secondary'>
+                    Delete your info
+                  </Typography>
+                </Box>
+              </Box>
+              <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
+                <CheckCircleIcon color='primary' />
+                <Box ml={1}>
+                  <Typography color='secondary'>
+                    Tell them not to sell your info
+                  </Typography>
+                </Box>
+              </Box>
+              <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
+                <CheckCircleIcon color='primary' />
+                <Box ml={1}>
+                  <Typography color='secondary'>
+                    Get a personalized privacy analysis (optional)
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Box>
         {this.renderDialog()}
@@ -192,14 +222,8 @@ class Index extends React.Component {
 }
 
 const styles = {
-  title: {
-
-  },
   subtitle: {
     fontWeight: 'normal'
-  },
-  button: {
-    backgroundColor: 'orange'
   }
 }
 
