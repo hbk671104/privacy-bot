@@ -35,8 +35,7 @@ const Layout = ({ children, classes, title }) => {
                     content="minimum-scale=1, initial-scale=1, width=device-width"
                 />
                 <title>{title}</title>
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa" />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa|Poppins" />
                 <script type='text/javascript'>
                     {`window.$crisp=[];window.CRISP_WEBSITE_ID="cc421c66-baa6-48dc-89c9-a7dda04473e1";
                     (function(){d = document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";
@@ -45,9 +44,20 @@ const Layout = ({ children, classes, title }) => {
                 </script>
             </Helmet>
             <ThemeProvider theme={theme}>
-                <Box className={classes.container}>
-                    <Box pl={3} pr={3}>
+                <Box display='flex' flexDirection='column'>
+                    <Box
+                        zIndex={2}
+                        style={{ backgroundColor: 'white' }}
+                        position='fixed'
+                        top={0}
+                        left='10vw'
+                        right='10vw'
+                        pl={6}
+                        pr={6}
+                    >
                         <Header />
+                    </Box>
+                    <Box zIndex={1} pt='108px' pl={3} pr={3}>
                         {children}
                     </Box>
                     <Footer />
@@ -70,10 +80,6 @@ const styles = {
         bottom: 0,
         left: 0
     },
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-    }
 }
 
 export default withStyles(styles)(Layout)
