@@ -142,7 +142,7 @@ class Index extends React.Component {
             notificationShown: false,
           })
         }}
-        message="Added to mailing list."
+        message="Added to invitation list."
         autoHideDuration={3000}
       />
     )
