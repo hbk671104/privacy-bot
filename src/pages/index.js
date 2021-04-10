@@ -1,9 +1,9 @@
 // load init script
-import '../utils/init'
+import "../utils/init"
 
-import * as React from 'react'
-import AV from 'leancloud-storage'
-import { Link } from 'gatsby'
+import * as React from "react"
+import AV from "leancloud-storage"
+import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import {
   Typography,
@@ -20,43 +20,38 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Divider
-} from '@material-ui/core'
-import {
-  withStyles
-} from '@material-ui/core/styles'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+  Divider,
+} from "@material-ui/core"
+import { withStyles } from "@material-ui/core/styles"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 class Index extends React.Component {
-
   state = {
-    email: '',
+    email: "",
     dialogOpen: false,
     notificationShown: false,
-    submitting: false
+    submitting: false,
   }
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   toggleDialog = () => {
-    this.setState((prevState) => ({
-      dialogOpen: !prevState.dialogOpen
+    this.setState(prevState => ({
+      dialogOpen: !prevState.dialogOpen,
     }))
   }
 
   submitEmail = async email => {
-    const entry = new AV.Object('MailingList');
-    entry.set('email', email)
+    const entry = new AV.Object("MailingList")
+    entry.set("email", email)
     this.setState({ submitting: true })
     try {
       await entry.save()
       this.setState({
-        email: '',
+        email: "",
         notificationShown: true,
         dialogOpen: false,
       })
@@ -64,7 +59,7 @@ class Index extends React.Component {
       console.error(error)
     } finally {
       this.setState({
-        submitting: false
+        submitting: false,
       })
     }
   }
@@ -80,7 +75,7 @@ class Index extends React.Component {
   handleEmailChange = e => {
     e.preventDefault()
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     })
   }
 
@@ -115,15 +110,21 @@ class Index extends React.Component {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Box height={48} width={60} mr={1} display='flex' justifyContent='center' alignItems='center'>
-            {
-              submitting ?
-                <CircularProgress size={24} />
-                :
-                <Button onClick={this.handleSubmit} color="primary">
-                  Submit
-                </Button>
-            }
+          <Box
+            height={48}
+            width={60}
+            mr={1}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {submitting ? (
+              <CircularProgress size={24} />
+            ) : (
+              <Button onClick={this.handleSubmit} color="primary">
+                Submit
+              </Button>
+            )}
           </Box>
         </DialogActions>
       </Dialog>
@@ -134,11 +135,11 @@ class Index extends React.Component {
     const { notificationShown } = this.state
     return (
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={notificationShown}
         onClose={() => {
           this.setState({
-            notificationShown: false
+            notificationShown: false,
           })
         }}
         message="Added to mailing list."
@@ -149,36 +150,32 @@ class Index extends React.Component {
 
   renderProductMission = () => {
     return (
-      <Box display='flex' flexDirection='column' alignItems='center' mt={1}>
+      <Box display="flex" flexDirection="column" alignItems="center" mt={3}>
         <Box>
-          <Box display='flex' flexDirection='row' alignItems='center'>
-            <CheckCircleIcon color='primary' />
+          <Box display="flex" flexDirection="row" alignItems="center">
+            <CheckCircleIcon color="primary" />
             <Box ml={1}>
-              <Typography color='secondary'>
+              <Typography color="secondary">
                 Instruct companies not to sell your info
-                  </Typography>
+              </Typography>
             </Box>
           </Box>
-          <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
-            <CheckCircleIcon color='primary' />
+          <Box mt={1} display="flex" flexDirection="row" alignItems="center">
+            <CheckCircleIcon color="primary" />
             <Box ml={1}>
-              <Typography color='secondary'>
-                Access your info
-                  </Typography>
+              <Typography color="secondary">Access your info</Typography>
             </Box>
           </Box>
-          <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
-            <CheckCircleIcon color='primary' />
+          <Box mt={1} display="flex" flexDirection="row" alignItems="center">
+            <CheckCircleIcon color="primary" />
             <Box ml={1}>
-              <Typography color='secondary'>
-                Delete your info
-                  </Typography>
+              <Typography color="secondary">Delete your info</Typography>
             </Box>
           </Box>
-          <Box mt={1} display='flex' flexDirection='row' alignItems='center'>
-            <CheckCircleIcon color='primary' />
+          <Box mt={1} display="flex" flexDirection="row" alignItems="center">
+            <CheckCircleIcon color="primary" />
             <Box ml={1}>
-              <Typography color='secondary'>
+              <Typography color="secondary">
                 Get our Personal Privacy Analysis (optional)
               </Typography>
             </Box>
@@ -191,161 +188,216 @@ class Index extends React.Component {
   renderFAQ = () => {
     const { classes } = this.props
     return (
-      <Box display='flex' flexDirection='column'>
-        <Box alignSelf='center'>
-          <Typography variant='h4'>
-            <Link id='faq'>Frequently Asked Questions</Link>
+      <Box display="flex" flexDirection="column">
+        <Box alignSelf="center">
+          <Typography variant="h4">
+            <Link id="faq">Frequently Asked Questions</Link>
           </Typography>
         </Box>
         <Box mt={6}>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
               <Typography>Does PrivacyBot make money?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                Right now, we don’t. We’re donating our time because we believe this service should exist. If we grow to need funding, we will engage our users to figure out what they’re comfortable with.
+              <Typography color="secondary">
+                Right now, we don’t. We’re donating our time because we believe
+                this service should exist. If we grow to need funding, we will
+                engage our users to figure out what they’re comfortable with.
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>What would you do with my email if I provided it?</Typography>
+              <Typography>
+                What would you do with my email if I provided it?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                We respect your inbox.  If you sign up to receive emails from us, we will send very occasional communications, including early invitations to new products and brief user feedback surveys. Expect, at maximum, three such emails a month. If at any point you decide that you don’t want to receive any of these emails, simply click the unsubscribe link included at the bottom of all PrivacyBot emails.
+              <Typography color="secondary">
+                We respect your inbox. If you sign up to receive emails from us,
+                we will send very occasional communications, including early
+                invitations to new products and brief user feedback surveys.
+                Expect, at maximum, three such emails a month. If at any point
+                you decide that you don’t want to receive any of these emails,
+                simply click the unsubscribe link included at the bottom of all
+                PrivacyBot emails.
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Will PrivacyBot, now or in the future, sell or share any of my information with outside parties?</Typography>
+              <Typography>
+                Will PrivacyBot, now or in the future, sell or share any of my
+                information with outside parties?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
+              <Typography color="secondary">
                 No. That is the exact opposite of our purpose.
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Does PrivacyBot use any ad tech, such as cookies or trackers?</Typography>
+              <Typography>
+                Does PrivacyBot use any ad tech, such as cookies or trackers?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                Of course not. You can verify this with services such as <a href='https://themarkup.org/blacklight?url=privacybot.co' target='_blank' rel="noreferrer">Blacklight</a>.
+              <Typography color="secondary">
+                Of course not. You can verify this with services such as{" "}
+                <a
+                  href="https://themarkup.org/blacklight?url=privacybot.co"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Blacklight
+                </a>
+                .
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>What is PrivacyBot’s optional Personal Privacy Analysis?</Typography>
+              <Typography>
+                What is PrivacyBot’s optional Personal Privacy Analysis?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                Companies are required to send a lot of information back to you, but they don’t have to make it easy to understand. Users who opt-in to receive the Personal Privacy Analysis can send us their data to summarize and present in a meaningful form.
+              <Typography color="secondary">
+                Companies are required to send a lot of information back to you,
+                but they don’t have to make it easy to understand. Users who
+                opt-in to receive the Personal Privacy Analysis can send us
+                their data to summarize and present in a meaningful form.
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Can I file personal data requests myself (without PrivacyBot)?</Typography>
+              <Typography>
+                Can I file personal data requests myself (without PrivacyBot)?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                Yes, but we make it much easier. PrivacyBot batches and automates requests to dozens of data holders to save you time.
+              <Typography color="secondary">
+                Yes, but we make it much easier. PrivacyBot batches and
+                automates requests to dozens of data holders to save you time.
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Why am I able to file requests to access, delete, and opt-out of sale of my information?</Typography>
+              <Typography>
+                Why am I able to file requests to access, delete, and opt-out of
+                sale of my information?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                Legislation such as <a href='https://gdpr-info.eu/' target='_blank' rel="noreferrer">General Data Privacy Regulation (GDPR)</a> and <a href='https://oag.ca.gov/privacy/ccpa' target='_blank' rel="noreferrer">California Consumer Privacy Act (CCPA)</a> are forcing major companies to provide more information and control to consumers. Many of the largest companies are providing these rights to all consumers in the US and in the EU.
+              <Typography color="secondary">
+                Legislation such as{" "}
+                <a
+                  href="https://gdpr-info.eu/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  General Data Privacy Regulation (GDPR)
+                </a>{" "}
+                and{" "}
+                <a
+                  href="https://oag.ca.gov/privacy/ccpa"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  California Consumer Privacy Act (CCPA)
+                </a>{" "}
+                are forcing major companies to provide more information and
+                control to consumers. Many of the largest companies are
+                providing these rights to all consumers in the US and in the EU.
               </Typography>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon color='primary' />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>I have more questions. Can I talk to someone?</Typography>
+              <Typography>
+                I have more questions. Can I talk to someone?
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography color='secondary'>
-                We’d love to talk! You can reach us at <a href='mailto:info@privacybot.co'>info@privacybot.co</a>.
+              <Typography color="secondary">
+                We’d love to talk! You can reach us at{" "}
+                <a href="mailto:info@privacybot.co">info@privacybot.co</a>.
               </Typography>
             </AccordionDetails>
           </Accordion>
         </Box>
-      </Box >
+      </Box>
     )
   }
 
   render() {
     const { classes } = this.props
     return (
-      <Layout title='PrivacyBot: Your privacy. Guaranteed.'>
+      <Layout title="PrivacyBot: Your privacy. Guaranteed.">
         <Box>
           <Box>
-            <Box display='flex' flexDirection='row' pt={3}>
+            <Box display="flex" flexDirection="row" pt={3}>
               <Box flex={1}>
                 <Box>
-                  <Typography variant='h3'>
+                  <Typography variant="h3" gutterBottom>
                     Did another data breach expose your personal information?
                   </Typography>
-                  <Box mt={2}>
-                    <Typography className={classes.subtitle} variant='h6'>
-                      Social media giants, big tech companies, and data brokers can leave your personal information unprotected. PrivacyBot gives you back control.
-                    </Typography>
-                  </Box>
+                  <Typography className={classes.subtitle} variant="h6">
+                    Social media giants, big tech companies, and data brokers
+                    can leave your personal information unprotected. PrivacyBot
+                    gives you back control.
+                  </Typography>
                 </Box>
                 {this.renderProductMission()}
               </Box>
               <Box flex={1}>
                 <StaticImage
                   src="../images/company-logos.png"
-                  placeholder='blurred'
+                  placeholder="blurred"
                   alt="rogue company logos"
                 />
               </Box>
             </Box>
-            <Box mt={3} display='flex' justifyContent='center'>
+            <Box mt={6} display="flex" justifyContent="center">
               <Button
-                color='primary'
+                color="primary"
                 variant="contained"
                 size="large"
                 onClick={this.toggleDialog}
@@ -361,15 +413,15 @@ class Index extends React.Component {
         </Box>
         {this.renderDialog()}
         {this.renderNotification()}
-      </Layout >
+      </Layout>
     )
   }
 }
 
 const styles = {
   subtitle: {
-    fontWeight: 'normal'
-  }
+    fontWeight: "normal",
+  },
 }
 
 export default withStyles(styles)(Index)

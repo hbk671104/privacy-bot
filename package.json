@@ -2,13 +2,12 @@
   "name": "PrivacyBot",
   "private": true,
   "description": "Your privacy, Guaranteed.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Bokang Huang <hbk671104@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "gatsby": "^3.0.1",
-    "gatsby-plugin-gatsby-cloud": "^2.0.0",
     "gatsby-plugin-image": "^1.0.0",
     "gatsby-plugin-manifest": "^3.0.0",
     "gatsby-plugin-material-ui": "^2.1.10",
@@ -17,13 +16,11 @@
     "gatsby-plugin-sharp": "^3.0.0",
     "gatsby-source-filesystem": "^3.0.0",
     "gatsby-transformer-sharp": "^3.0.0",
-    "leancloud-storage": "^4.10.0",
+    "leancloud-storage": "^4.10.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0",
-    "react-linkify": "0.2.2",
-    "react-tsparticles": "^1.19.2"
+    "react-helmet": "^6.1.0"
   },
   "devDependencies": {
     "prettier": "2.2.1"

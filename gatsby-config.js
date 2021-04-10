@@ -5,7 +5,7 @@ module.exports = {
     author: `@hbk671104`,
   },
   plugins: [
-    'gatsby-plugin-material-ui',
+    "gatsby-plugin-material-ui",
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
@@ -29,7 +29,6 @@ module.exports = {
         icon: `src/images/logo-bot.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-gatsby-cloud`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
