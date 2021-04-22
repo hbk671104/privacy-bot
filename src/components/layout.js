@@ -23,6 +23,7 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: "Poppins",
   },
+  // spacing: 6,
 })
 
 const Layout = ({ children, classes, title }) => {
@@ -37,11 +38,7 @@ const Layout = ({ children, classes, title }) => {
         <title>{title}</title>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Comfortaa"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Poppins"
+          href="https://fonts.googleapis.com/css?family=Comfortaa|Poppins"
         />
         <script type="text/javascript">
           {`window.$crisp=[];window.CRISP_WEBSITE_ID="cc421c66-baa6-48dc-89c9-a7dda04473e1";
@@ -67,7 +64,7 @@ const styles = {
   root: {
     backgroundColor: "white",
     minHeight: "100vh",
-    width: "80vw",
+    width: "72vw",
   },
   particles: {
     position: "fixed",

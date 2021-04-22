@@ -1,6 +1,6 @@
 import * as React from "react"
 import { StaticImage } from "gatsby-plugin-image"
-import { Link } from "gatsby"
+// import { Link } from "gatsby"
 import { Box, Typography } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 

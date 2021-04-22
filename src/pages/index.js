@@ -3,7 +3,7 @@ import "../utils/init"
 
 import * as React from "react"
 import AV from "leancloud-storage"
-import { Link } from "gatsby"
+// import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import {
   Typography,
@@ -11,7 +11,7 @@ import {
   Button,
   Snackbar,
   Dialog,
-  DialogTitle,
+  // DialogTitle,
   DialogContentText,
   DialogContent,
   DialogActions,
@@ -150,8 +150,11 @@ class Index extends React.Component {
 
   renderProductMission = () => {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" mt={3}>
+      <Box display="flex" flexDirection="column">
         <Box>
+          <Typography variant="h4">How PrivacyBot Can Help</Typography>
+        </Box>
+        <Box mt={2}>
           <Box display="flex" flexDirection="row" alignItems="center">
             <CheckCircleIcon color="primary" />
             <Box ml={1}>
@@ -186,12 +189,12 @@ class Index extends React.Component {
   }
 
   renderFAQ = () => {
-    const { classes } = this.props
+    // const { classes } = this.props
     return (
       <Box display="flex" flexDirection="column">
         <Box alignSelf="center">
           <Typography variant="h4">
-            <Link id="faq">Frequently Asked Questions</Link>
+            <a id="faq">Frequently Asked Questions</a>
           </Typography>
         </Box>
         <Box mt={6}>
@@ -368,7 +371,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    // const { classes } = this.props
     return (
       <Layout title="PrivacyBot: Your privacy. Guaranteed.">
         <Box>
@@ -376,14 +379,24 @@ class Index extends React.Component {
             <Box display="flex" flexDirection="row" pt={3}>
               <Box flex={1}>
                 <Box>
-                  <Typography variant="h3" gutterBottom>
-                    Did another data breach expose your personal information?
+                  <Typography variant="h2" gutterBottom>
+                    Take Back Control of Your Privacy
                   </Typography>
-                  <Typography className={classes.subtitle} variant="h6">
-                    Social media giants, big tech companies, and data brokers
-                    can leave your personal information unprotected. PrivacyBot
-                    gives you back control.
+                  <Typography variant="h5">
+                    Big tech, banks, and data brokers can leave your personal
+                    information exposed.
                   </Typography>
+                </Box>
+                <Box mt={6} mb={6} display="flex" justifyContent="center">
+                  <Button
+                    style={{ minWidth: "360px" }}
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    onClick={this.toggleDialog}
+                  >
+                    Get Started
+                  </Button>
                 </Box>
                 {this.renderProductMission()}
               </Box>
@@ -395,8 +408,9 @@ class Index extends React.Component {
                 />
               </Box>
             </Box>
-            <Box mt={6} display="flex" justifyContent="center">
+            {/* <Box mt={6} display="flex" justifyContent="center">
               <Button
+                style={{ minWidth: "360px" }}
                 color="primary"
                 variant="contained"
                 size="large"
@@ -404,7 +418,7 @@ class Index extends React.Component {
               >
                 Get Started
               </Button>
-            </Box>
+            </Box> */}
           </Box>
           <Box mt={6} mb={6}>
             <Divider />
@@ -418,10 +432,4 @@ class Index extends React.Component {
   }
 }
 
-const styles = {
-  subtitle: {
-    fontWeight: "normal",
-  },
-}
-
-export default withStyles(styles)(Index)
+export default withStyles()(Index)
