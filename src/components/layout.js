@@ -44,8 +44,8 @@ const Layout = ({ children, classes, title }) => {
           {`window.$crisp=[];window.CRISP_WEBSITE_ID="cc421c66-baa6-48dc-89c9-a7dda04473e1";
                     (function(){d = document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";
                     s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-                    `} */}
-        </script>
+                    `}
+        </script> */}
       </Helmet>
       <ThemeProvider theme={theme}>
         <Box className={classes.container}>
