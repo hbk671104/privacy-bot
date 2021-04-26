@@ -402,23 +402,37 @@ class Index extends React.Component {
               </Box>
               <Box flex={1}>
                 <StaticImage
-                  src="../images/company-logos.png"
+                  src="../images/chase.jpeg"
                   placeholder="blurred"
-                  alt="rogue company logos"
+                  alt="chase"
+                />
+                <StaticImage
+                  src="../images/facebook.jpeg"
+                  placeholder="blurred"
+                  alt="chase"
+                />
+                <StaticImage
+                  src="../images/google.jpeg"
+                  placeholder="blurred"
+                  alt="chase"
+                />
+                <StaticImage
+                  src="../images/linkedin.jpeg"
+                  placeholder="blurred"
+                  alt="chase"
+                />
+                <StaticImage
+                  src="../images/uber.jpeg"
+                  placeholder="blurred"
+                  alt="chase"
+                />
+                <StaticImage
+                  src="../images/youtube-tiktok-instagram.jpeg"
+                  placeholder="blurred"
+                  alt="chase"
                 />
               </Box>
             </Box>
-            {/* <Box mt={6} display="flex" justifyContent="center">
-              <Button
-                style={{ minWidth: "360px" }}
-                color="primary"
-                variant="contained"
-                size="large"
-                onClick={this.toggleDialog}
-              >
-                Get Started
-              </Button>
-            </Box> */}
           </Box>
           <Box mt={6} mb={6}>
             <Divider />
