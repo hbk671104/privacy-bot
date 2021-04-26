@@ -409,27 +409,27 @@ class Index extends React.Component {
                 <StaticImage
                   src="../images/facebook.jpeg"
                   placeholder="blurred"
-                  alt="chase"
+                  alt="facebook"
                 />
                 <StaticImage
                   src="../images/google.jpeg"
                   placeholder="blurred"
-                  alt="chase"
+                  alt="google"
                 />
                 <StaticImage
                   src="../images/linkedin.jpeg"
                   placeholder="blurred"
-                  alt="chase"
+                  alt="linkedin"
                 />
                 <StaticImage
                   src="../images/uber.jpeg"
                   placeholder="blurred"
-                  alt="chase"
+                  alt="uber"
                 />
                 <StaticImage
                   src="../images/youtube-tiktok-instagram.jpeg"
                   placeholder="blurred"
-                  alt="chase"
+                  alt="youtube-tiktok-instagram"
                 />
               </Box>
             </Box>
