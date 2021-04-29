@@ -60,11 +60,14 @@ const Layout = ({ children, classes, title }) => {
   )
 }
 
-const styles = {
+const styles = theme => ({
   root: {
     backgroundColor: "white",
     minHeight: "100vh",
     width: "72vw",
+    [theme.breakpoints.down("md")]: {
+      width: "100vw",
+    },
   },
   particles: {
     position: "fixed",
@@ -77,6 +80,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
   },
-}
+})
 
 export default withStyles(styles)(Layout)

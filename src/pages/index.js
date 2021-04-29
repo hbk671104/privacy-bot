@@ -149,10 +149,13 @@ class Index extends React.Component {
   }
 
   renderProductMission = () => {
+    const { classes } = this.props
     return (
       <Box display="flex" flexDirection="column">
         <Box>
-          <Typography variant="h4">How PrivacyBot Can Help</Typography>
+          <Typography className={classes.title} variant="h4">
+            How PrivacyBot Can Help
+          </Typography>
         </Box>
         <Box mt={2}>
           <Box display="flex" flexDirection="row" alignItems="center">
@@ -193,7 +196,7 @@ class Index extends React.Component {
     return (
       <Box display="flex" flexDirection="column">
         <Box alignSelf="center">
-          <Typography variant="h4">
+          <Typography variant="h4" align="center">
             <a id="faq">Frequently Asked Questions</a>
           </Typography>
         </Box>
@@ -371,7 +374,7 @@ class Index extends React.Component {
   }
 
   render() {
-    // const { classes } = this.props
+    const { classes } = this.props
     return (
       <Layout title="PrivacyBot: Your privacy. Guaranteed.">
         <Box>
@@ -379,7 +382,11 @@ class Index extends React.Component {
             <Box display="flex" flexDirection="row" pt={3}>
               <Box flex={1}>
                 <Box>
-                  <Typography variant="h2" gutterBottom>
+                  <Typography
+                    className={classes.title}
+                    variant="h2"
+                    gutterBottom
+                  >
                     Take Back Control of Your Privacy
                   </Typography>
                   <Typography variant="h5">
@@ -389,7 +396,7 @@ class Index extends React.Component {
                 </Box>
                 <Box mt={6} mb={6} display="flex" justifyContent="center">
                   <Button
-                    style={{ minWidth: "360px" }}
+                    className={classes.button}
                     color="primary"
                     variant="contained"
                     size="large"
@@ -400,34 +407,46 @@ class Index extends React.Component {
                 </Box>
                 {this.renderProductMission()}
               </Box>
-              <Box flex={1}>
+              <Box
+                className={classes.imageContainer}
+                flex={1}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+              >
                 <StaticImage
+                  className={classes.headline}
                   src="../images/chase.jpeg"
                   placeholder="blurred"
                   alt="chase"
                 />
                 <StaticImage
+                  className={classes.headline}
                   src="../images/facebook.jpeg"
                   placeholder="blurred"
                   alt="facebook"
                 />
                 <StaticImage
+                  className={classes.headline}
                   src="../images/google.jpeg"
                   placeholder="blurred"
                   alt="google"
                 />
                 <StaticImage
+                  className={classes.headline}
                   src="../images/linkedin.jpeg"
                   placeholder="blurred"
                   alt="linkedin"
                 />
                 <StaticImage
+                  className={classes.headline}
                   src="../images/uber.jpeg"
                   placeholder="blurred"
                   alt="uber"
                 />
                 <StaticImage
-                  src="../images/youtube-tiktok-instagram.jpeg"
+                  className={classes.headline}
+                  src="../images/ins-youtube-tiktok.png"
                   placeholder="blurred"
                   alt="youtube-tiktok-instagram"
                 />
@@ -446,4 +465,25 @@ class Index extends React.Component {
   }
 }
 
-export default withStyles()(Index)
+const styles = theme => ({
+  imageContainer: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  button: {
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "360px",
+    },
+  },
+  title: {
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+    },
+  },
+  headline: {
+    maxWidth: "480px",
+  },
+})
+
+export default withStyles(styles)(Index)
