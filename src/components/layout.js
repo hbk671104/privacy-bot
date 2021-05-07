@@ -66,7 +66,7 @@ const styles = theme => ({
   root: {
     backgroundColor: "white",
     minHeight: "100vh",
-    width: "72vw",
+    width: "80vw",
     [theme.breakpoints.down("md")]: {
       width: "100vw",
     },
