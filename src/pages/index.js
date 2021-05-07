@@ -39,9 +39,16 @@ class Index extends React.Component {
   componentDidMount() {}
 
   toggleDialog = () => {
-    this.setState(prevState => ({
-      dialogOpen: !prevState.dialogOpen,
-    }))
+    this.setState(
+      prevState => ({
+        dialogOpen: !prevState.dialogOpen,
+      }),
+      () => {
+        if (this.state.dialogOpen) {
+          this.recordGetStartedClick()
+        }
+      }
+    )
   }
 
   submitEmail = async email => {
@@ -61,6 +68,16 @@ class Index extends React.Component {
       this.setState({
         submitting: false,
       })
+    }
+  }
+
+  recordGetStartedClick = async () => {
+    const click = new AV.Object("UserBehavior")
+    click.set("event", "get_started_button_click")
+    try {
+      await click.save()
+    } catch (error) {
+      console.error(error)
     }
   }
 
