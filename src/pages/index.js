@@ -420,7 +420,7 @@ class Index extends React.Component {
               >
                 <StaticImage
                   className={classes.headline}
-                  src="../images/chase.jpeg"
+                  src="../images/chase.png"
                   placeholder="blurred"
                   alt="chase"
                 />
@@ -432,13 +432,13 @@ class Index extends React.Component {
                 />
                 <StaticImage
                   className={classes.headline}
-                  src="../images/google.jpeg"
+                  src="../images/google.png"
                   placeholder="blurred"
                   alt="google"
                 />
                 <StaticImage
                   className={classes.headline}
-                  src="../images/linkedin.jpeg"
+                  src="../images/linkedin.png"
                   placeholder="blurred"
                   alt="linkedin"
                 />
