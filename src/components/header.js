@@ -30,7 +30,7 @@ const Header = ({ classes }) => {
         flexDirection="row"
         justifyContent="flex-end"
       >
-        <Box>
+        <Box className={classes.faqTab}>
           <Typography variant="h6" color="secondary">
             <a
               href="/#faq"
@@ -45,6 +45,12 @@ const Header = ({ classes }) => {
   )
 }
 
-const styles = {}
+const styles = theme => ({
+  faqTab: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+})
 
 export default withStyles(styles)(Header)

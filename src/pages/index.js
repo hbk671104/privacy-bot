@@ -151,7 +151,11 @@ class Index extends React.Component {
   renderProductMission = () => {
     const { classes } = this.props
     return (
-      <Box display="flex" flexDirection="column">
+      <Box
+        className={classes.productMisson}
+        display="flex"
+        flexDirection="column"
+      >
         <Box>
           <Typography className={classes.title} variant="h4">
             How PrivacyBot Can Help
@@ -192,10 +196,10 @@ class Index extends React.Component {
   }
 
   renderFAQ = () => {
-    // const { classes } = this.props
+    const { classes } = this.props
     return (
       <Box display="flex" flexDirection="column">
-        <Box alignSelf="center">
+        <Box className={classes.faqTitle} alignSelf="center" mt={6}>
           <Typography variant="h4" align="center">
             <a id="faq">Frequently Asked Questions</a>
           </Typography>
@@ -389,7 +393,7 @@ class Index extends React.Component {
                   >
                     Take Back Control of Your Privacy
                   </Typography>
-                  <Typography variant="h5">
+                  <Typography className={classes.title} variant="h5">
                     Big tech, banks, and data brokers can leave your personal
                     information exposed.
                   </Typography>
@@ -453,7 +457,7 @@ class Index extends React.Component {
               </Box>
             </Box>
           </Box>
-          <Box mt={6} mb={6}>
+          <Box mt={6}>
             <Divider />
           </Box>
           {this.renderFAQ()}
@@ -467,7 +471,7 @@ class Index extends React.Component {
 
 const styles = theme => ({
   imageContainer: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
@@ -477,12 +481,22 @@ const styles = theme => ({
     },
   },
   title: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       textAlign: "center",
     },
   },
   headline: {
     maxWidth: "480px",
+  },
+  faqTitle: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  productMisson: {
+    [theme.breakpoints.down("sm")]: {
+      alignItems: "center",
+    },
   },
 })
 

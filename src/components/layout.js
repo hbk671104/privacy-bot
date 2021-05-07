@@ -5,13 +5,14 @@ import {
   withStyles,
   createMuiTheme,
   ThemeProvider,
+  responsiveFontSizes,
 } from "@material-ui/core/styles"
 
 // local import
 import Header from "./header"
 import Footer from "./footer"
 
-const theme = createMuiTheme({
+let theme = createMuiTheme({
   palette: {
     primary: {
       main: "#df4b1d",
@@ -25,6 +26,7 @@ const theme = createMuiTheme({
   },
   // spacing: 6,
 })
+theme = responsiveFontSizes(theme)
 
 const Layout = ({ children, classes, title }) => {
   return (
